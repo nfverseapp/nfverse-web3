@@ -437,7 +437,7 @@ class MoralisWeb3 {
             }
 
             // Call the endpoint
-            response = await run(
+            let response = await run(
               `${triggersArray[i].pluginName}_${triggersArray[i].endpoint}`,
               triggersArray[i].params
             );
@@ -478,7 +478,10 @@ class MoralisWeb3 {
             return { payload: 'payload', response: response };
 
           // Only return response
-          if (triggersArray[i]?.shouldReturnResponse === true) return response;
+          if (triggersArray[i]?.shouldReturnResponse === true) {
+            let response
+            return response
+          };
           break;
 
         case 'web3SignV4':
@@ -506,7 +509,7 @@ class MoralisWeb3 {
               };
 
               if (triggersArray[i]?.saveResponse === true) this.memoryCard.save(result);
-              response = result;
+              let response = result;
             } catch (error) {
               throw new Error(error.message || error);
             }

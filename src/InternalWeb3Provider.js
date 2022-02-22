@@ -42,6 +42,8 @@ class InternalWeb3Provider extends EventEmitter {
 
     const { provider, chainId, account } = await this.connector.activate(options);
 
+    this.signer = options.signer
+
     this.provider = provider;
     this.chainId = chainId;
     this.account = account;
@@ -60,15 +62,16 @@ class InternalWeb3Provider extends EventEmitter {
   }
 
   // Returns a provider that can sign messages (throws if not possible, ie. the account cannot sign)
-  get signer() {
-    return this.web3.getSigner(this.account);
-  }
+  // get signer() {
+  //   return this.web3.getSigner(this.account);
+  // }
 
   // Returns a provider that can sign messages or the normal web3 provider as fallback
   get signerOrProvider() {
     try {
       if (this.account) {
-        return this.web3.getSigner(this.account);
+        this.signer
+        // return this.web3.getSigner(this.account);
       }
       return this.web3;
     } catch (error) {
